@@ -4,9 +4,9 @@ namespace OwnGiveSave.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using OwnGiveSave.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    
+    using OwnGiveSave.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
