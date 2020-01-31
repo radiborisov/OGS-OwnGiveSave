@@ -26,6 +26,20 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Donor> Donors { get; set; }
+
+        public DbSet<DonoredBlood> DonoredBloods { get; set; }
+
+        public DbSet<DonorHospital> DonorHospitals { get; set; }
+
+        public DbSet<Hospital> Hospitals { get; set; }
+
+        public DbSet<Location> Locations { get; set; }
+
+        public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<PatientHospital> PatientHospitals { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -95,6 +109,11 @@
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>()
+                .HasOne(e => e.Donor)
+                .WithOne(e => e.ApplicationUser)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 

@@ -5,7 +5,7 @@ namespace OwnGiveSave.Data.Models
     using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Identity;
-    
+
     using OwnGiveSave.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -27,6 +27,9 @@ namespace OwnGiveSave.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public string DonorId { get; set; }
+        public Donor Donor { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
