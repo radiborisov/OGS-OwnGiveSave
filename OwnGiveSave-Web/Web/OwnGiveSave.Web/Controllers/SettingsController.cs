@@ -5,10 +5,10 @@
 
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
-    using OwnGiveSave.Services.Data;
     using OwnGiveSave.Web.ViewModels.Settings;
 
     using Microsoft.AspNetCore.Mvc;
+    using OwnGiveSave.Services.Data.Contracts;
 
     public class SettingsController : BaseController
     {

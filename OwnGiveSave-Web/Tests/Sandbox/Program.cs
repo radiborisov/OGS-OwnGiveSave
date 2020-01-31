@@ -5,6 +5,11 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using OwnGiveSave.Data;
     using OwnGiveSave.Data.Common;
     using OwnGiveSave.Data.Common.Repositories;
@@ -12,14 +17,8 @@
     using OwnGiveSave.Data.Repositories;
     using OwnGiveSave.Data.Seeding;
     using OwnGiveSave.Services.Data;
+    using OwnGiveSave.Services.Data.Contracts;
     using OwnGiveSave.Services.Messaging;
-
-    using CommandLine;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
 
     public static class Program
     {

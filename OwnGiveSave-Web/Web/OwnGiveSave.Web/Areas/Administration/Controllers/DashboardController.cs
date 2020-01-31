@@ -1,9 +1,9 @@
 ﻿namespace OwnGiveSave.Web.Areas.Administration.Controllers
 {
-    using OwnGiveSave.Services.Data;
     using OwnGiveSave.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;
+    using OwnGiveSave.Services.Data.Contracts;
 
     public class DashboardController : AdministrationController
     {
