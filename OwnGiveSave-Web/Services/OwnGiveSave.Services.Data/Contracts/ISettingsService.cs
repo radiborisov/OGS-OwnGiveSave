@@ -1,4 +1,4 @@
-﻿namespace OwnGiveSave.Services.Data
+﻿namespace OwnGiveSave.Services.Data.Contracts
 {
     using System.Collections.Generic;
 

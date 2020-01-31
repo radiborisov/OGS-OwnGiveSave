@@ -5,6 +5,7 @@
 
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
+    using OwnGiveSave.Services.Data.Contracts;
     using OwnGiveSave.Services.Mapping;
 
     public class SettingsService : ISettingsService
