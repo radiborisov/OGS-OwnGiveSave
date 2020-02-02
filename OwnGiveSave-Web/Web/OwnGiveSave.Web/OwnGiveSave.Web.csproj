@@ -27,7 +27,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
@@ -38,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\OwnGiveSave.Admin.Data\OwnGiveSave.Admin.Data.csproj" />
     <ProjectReference Include="..\..\Data\OwnGiveSave.Data.Models\OwnGiveSave.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\OwnGiveSave.Data\OwnGiveSave.Data.csproj" />
     <ProjectReference Include="..\..\Services\OwnGiveSave.Services.Data\OwnGiveSave.Services.Data.csproj" />

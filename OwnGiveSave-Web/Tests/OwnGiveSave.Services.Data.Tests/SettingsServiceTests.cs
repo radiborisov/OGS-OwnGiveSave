@@ -4,14 +4,14 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
+    using Moq;
+
     using OwnGiveSave.Data;
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Data.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using Moq;
 
     using Xunit;
 

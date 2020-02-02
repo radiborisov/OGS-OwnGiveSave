@@ -1,14 +1,28 @@
 ﻿namespace OwnGiveSave.Web
 {
+    using System;
+    using System.Linq;
     using System.Reflection;
+    using System.Security.Claims;
+    using System.Security.Principal;
+    using System.Text;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
+
+    using OwnGiveSave.Admin.Data;
+    using OwnGiveSave.Admin.Data.Models;
+    using OwnGiveSave.Admin.Data.Repositories;
+    using OwnGiveSave.Admin.Data.Seeding;
 
     using OwnGiveSave.Data;
     using OwnGiveSave.Data.Common;
@@ -20,6 +34,7 @@
     using OwnGiveSave.Services.Data.Contracts;
     using OwnGiveSave.Services.Mapping;
     using OwnGiveSave.Services.Messaging;
+    using OwnGiveSave.Web.Infrastructure.Middlewares.Auth;
     using OwnGiveSave.Web.ViewModels;
 
     public class Startup
@@ -34,18 +49,63 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationAdminDbContext>(
+                options => options.UseSqlServer(this.configuration.GetConnectionString("AdminConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(
+              options => options.UseSqlServer(this.configuration.GetConnectionString("UserConnection")));
+
+            services.AddDefaultIdentity<ApplicationAdminUser>(AdminIdentityOptionsProvider.GetIdentityOptions)
+                            .AddRoles<ApplicationAdminRole>().AddEntityFrameworkStores<ApplicationAdminDbContext>();
 
             services.Configure<CookiePolicyOptions>(
                 options =>
+                {
+                    options.CheckConsentNeeded = context => true;
+                    options.MinimumSameSitePolicy = SameSiteMode.None;
+                });
+
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["JwtTokenValidation:Secret"]));
+
+            services.Configure<TokenProviderOptions>(opts =>
+            {
+                opts.Audience = this.configuration["JwtTokenValidation:Audience"];
+                opts.Issuer = this.configuration["JwtTokenValidation:Issuer"];
+                opts.Path = "/api/account/login";
+                opts.Expiration = TimeSpan.FromDays(15);
+                opts.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            });
+
+            services
+                .AddAuthentication()
+                .AddJwtBearer(opts =>
+                {
+                    opts.TokenValidationParameters = new TokenValidationParameters
                     {
-                        options.CheckConsentNeeded = context => true;
-                        options.MinimumSameSitePolicy = SameSiteMode.None;
-                    });
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = signingKey,
+                        ValidateIssuer = true,
+                        ValidIssuer = this.configuration["JwtTokenValidation:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = this.configuration["JwtTokenValidation:Audience"],
+                        ValidateLifetime = true,
+                    };
+                });
+
+            services
+                .AddIdentityCore<ApplicationUser>(options =>
+                {
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddUserStore<OwnGiveSaveUserStore>()
+                .AddRoleStore<OwnGiveSaveRoleStore>()
+                .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -53,13 +113,13 @@
             services.AddSingleton(this.configuration);
 
             // Data repositories
-            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfAdminDeletableEntityRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfAdminRepository<>));
+            services.AddScoped<IDbQueryRunner, DbAdminQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
+            //services.AddTransient<IEmailSender, NullMessageSender>();
+            //services.AddTransient<ISettingsService, SettingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,16 +128,28 @@
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            //    if (env.IsDevelopment())
+            //    {
+            //        dbContext.Database.Migrate();
+            //    }
+
+            //    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            //}
+
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationAdminDbContext>();
 
                 if (env.IsDevelopment())
                 {
                     dbContext.Database.Migrate();
                 }
 
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                new ApplicationAdminDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
             if (env.IsDevelopment())
@@ -100,13 +172,44 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseJwtBearerTokens(
+             app.ApplicationServices.GetRequiredService<IOptions<TokenProviderOptions>>(),
+             PrincipalResolver);
+
             app.UseEndpoints(
                 endpoints =>
-                    {
-                        endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapRazorPages();
-                    });
+                {
+                    endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
+                });
+        }
+
+        private static async Task<GenericPrincipal> PrincipalResolver(HttpContext context)
+        {
+            var email = context.Request.Form["email"];
+
+            var userManager = context.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null || user.IsDeleted)
+            {
+                return null;
+            }
+
+            var password = context.Request.Form["password"];
+
+            var isValidPassword = await userManager.CheckPasswordAsync(user, password);
+            if (!isValidPassword)
+            {
+                return null;
+            }
+
+            var roles = await userManager.GetRolesAsync(user);
+
+            var identity = new GenericIdentity(email, "Token");
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+
+            return new GenericPrincipal(identity, roles.ToArray());
         }
     }
 }

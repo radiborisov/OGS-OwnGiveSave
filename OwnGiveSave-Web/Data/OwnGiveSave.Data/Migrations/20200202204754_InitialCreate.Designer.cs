@@ -10,7 +10,7 @@ using OwnGiveSave.Data;
 namespace OwnGiveSave.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200131124018_InitialCreate")]
+    [Migration("20200202204754_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

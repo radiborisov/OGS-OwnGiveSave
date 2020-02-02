@@ -1,11 +1,10 @@
-﻿namespace OwnGiveSave.Data
+﻿namespace OwnGiveSave.Admin.Data
 {
     using System.Linq;
-
     using Microsoft.EntityFrameworkCore;
     using OwnGiveSave.Data.Common.Models;
 
-    internal static class EntityIndexesConfiguration
+    internal static class AdminEntityIndexesConfiguration
     {
         public static void Configure(ModelBuilder modelBuilder)
         {

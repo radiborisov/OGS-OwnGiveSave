@@ -3,12 +3,11 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
-    using OwnGiveSave.Web.ViewModels.Settings;
-
-    using Microsoft.AspNetCore.Mvc;
     using OwnGiveSave.Services.Data.Contracts;
+    using OwnGiveSave.Web.ViewModels.Settings;
 
     public class SettingsController : BaseController
     {

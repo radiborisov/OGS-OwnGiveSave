@@ -2,9 +2,8 @@
 {
     using System.Diagnostics;
 
-    using OwnGiveSave.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using OwnGiveSave.Web.ViewModels;
 
     public class HomeController : BaseController
     {
