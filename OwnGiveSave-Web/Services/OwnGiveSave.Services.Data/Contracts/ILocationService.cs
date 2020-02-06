@@ -9,6 +9,7 @@
 
         Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        Task<IEnumerable<TModel>> GetLocationByHospitalIdAsync<TModel>();
+        // TODO Logic for location/hospital
+        // Task<IEnumerable<TModel>> GetLocationByHospitalIdAsync<TModel>(string hospitalId);
     }
 }

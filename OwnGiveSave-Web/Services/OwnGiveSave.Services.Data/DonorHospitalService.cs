@@ -1,9 +1,11 @@
 ﻿namespace OwnGiveSave.Services.Data
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Data.Contracts;
@@ -34,13 +36,22 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>()
+        public async Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>(string donorId)
         {
             return await this.donorHospitalRepository
                .All()
+               .Where(x => x.DonorId == donorId)
                .To<TModel>()
                .ToListAsync();
         }
 
+        public async Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>(string hospitalId)
+        {
+            return await this.donorHospitalRepository
+              .All()
+              .Where(x => x.HospitalId == hospitalId)
+              .To<TModel>()
+              .ToListAsync();
+        }
     }
 }

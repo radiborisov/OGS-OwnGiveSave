@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using OwnGiveSave.Data.Common.Repositories;
@@ -34,10 +35,11 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>()
+        public async Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>(string donorId)
         {
             return await this.hospitalRepository
                .All()
+               .Where(x => x.HospitalDonors.Any(x => x.DonorId == donorId))
                .To<TModel>()
                .ToListAsync();
         }

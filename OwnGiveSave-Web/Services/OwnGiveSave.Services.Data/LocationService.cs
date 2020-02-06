@@ -34,12 +34,9 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetLocationByHospitalIdAsync<TModel>()
-        {
-            return await this.locationRepository
-                .All()
-                .To<TModel>()
-                .ToListAsync();
-        }
+        //public async Task<IEnumerable<TModel>> GetLocationByHospitalIdAsync<TModel>(string hospitalId)
+        //{
+        //    return await this.locationRepository.All().FirstOrDefaultAsync(x => x.)
+        //}
     }
 }

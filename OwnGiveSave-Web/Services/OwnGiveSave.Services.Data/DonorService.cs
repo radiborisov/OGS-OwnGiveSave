@@ -32,12 +32,20 @@
 
         public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
         {
-            return await this.donorRepository.All().To<TModel>().ToListAsync();
+            return await this.donorRepository
+                .All()
+                .To<TModel>()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>(string hospitalId)
         {
-            return await this.donorRepository.All().Where(x => x.DonorHospitals.Where(x => x.HospitalId == hospitalId)).To<TModel>().ToListAsync();
+            return await this.donorRepository
+                .All()
+                .Where(x => x.DonorHospitals
+                .Any(x => x.HospitalId == hospitalId))
+                .To<TModel>()
+                .ToListAsync();
         }
     }
 }
