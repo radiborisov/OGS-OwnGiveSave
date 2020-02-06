@@ -3,12 +3,12 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IDonorService
+    public interface IHospitalService
     {
-        Task AddDonorAsync<TModel>(TModel model);
+        Task AddHospitalAsync<TModel>(TModel donoredBlood);
 
         Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>();
+        Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>();
     }
 }

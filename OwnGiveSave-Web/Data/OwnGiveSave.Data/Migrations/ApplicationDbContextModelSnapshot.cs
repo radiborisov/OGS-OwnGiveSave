@@ -183,6 +183,7 @@ namespace OwnGiveSave.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DonorId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -434,6 +435,9 @@ namespace OwnGiveSave.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("HospitalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -448,45 +452,11 @@ namespace OwnGiveSave.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Patients");
-                });
-
-            modelBuilder.Entity("OwnGiveSave.Data.Models.PatientHospital", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("HospitalId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PatientId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("HospitalId");
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("PatientHospitals");
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("OwnGiveSave.Data.Models.Setting", b =>
@@ -611,19 +581,11 @@ namespace OwnGiveSave.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OwnGiveSave.Data.Models.PatientHospital", b =>
+            modelBuilder.Entity("OwnGiveSave.Data.Models.Patient", b =>
                 {
-                    b.HasOne("OwnGiveSave.Data.Models.Hospital", "Hospital")
-                        .WithMany("HospitalPatients")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OwnGiveSave.Data.Models.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("OwnGiveSave.Data.Models.Hospital", null)
+                        .WithMany("Patients")
+                        .HasForeignKey("HospitalId");
                 });
 #pragma warning restore 612, 618
         }

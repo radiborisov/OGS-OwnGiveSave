@@ -14,7 +14,7 @@
             this.CreatedOn = DateTime.UtcNow;
 
             this.HospitalDonors = new HashSet<DonorHospital>();
-            this.HospitalPatients = new HashSet<PatientHospital>();
+            this.Patients = new HashSet<Patient>();
         }
 
         [Required]
@@ -27,7 +27,7 @@
         [Required]
         public string TypeOfTheHospital { get; set; }
 
-        public ICollection<PatientHospital> HospitalPatients { get; set; }
+        public ICollection<Patient> Patients { get; set; }
 
         public ICollection<DonorHospital> HospitalDonors { get; set; }
     }

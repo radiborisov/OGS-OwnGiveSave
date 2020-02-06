@@ -48,7 +48,7 @@ namespace OwnGiveSave.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    DonorId = table.Column<string>(nullable: true)
+                    DonorId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,23 +89,6 @@ namespace OwnGiveSave.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Patients",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    TypeBlood = table.Column<int>(nullable: false),
-                    NeededDonators = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Patients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,7 +298,7 @@ namespace OwnGiveSave.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PatientHospitals",
+                name: "Patients",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -323,22 +306,17 @@ namespace OwnGiveSave.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    PatientId = table.Column<string>(nullable: false),
-                    HospitalId = table.Column<string>(nullable: false)
+                    TypeBlood = table.Column<int>(nullable: false),
+                    NeededDonators = table.Column<int>(nullable: false),
+                    HospitalId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PatientHospitals", x => x.Id);
+                    table.PrimaryKey("PK_Patients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PatientHospitals_Hospitals_HospitalId",
+                        name: "FK_Patients_Hospitals_HospitalId",
                         column: x => x.HospitalId,
                         principalTable: "Hospitals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PatientHospitals_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -444,19 +422,9 @@ namespace OwnGiveSave.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PatientHospitals_HospitalId",
-                table: "PatientHospitals",
+                name: "IX_Patients_HospitalId",
+                table: "Patients",
                 column: "HospitalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PatientHospitals_IsDeleted",
-                table: "PatientHospitals",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PatientHospitals_PatientId",
-                table: "PatientHospitals",
-                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_IsDeleted",
@@ -490,7 +458,7 @@ namespace OwnGiveSave.Data.Migrations
                 name: "DonorHospitals");
 
             migrationBuilder.DropTable(
-                name: "PatientHospitals");
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Settings");
@@ -506,9 +474,6 @@ namespace OwnGiveSave.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Hospitals");
-
-            migrationBuilder.DropTable(
-                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

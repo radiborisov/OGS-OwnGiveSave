@@ -3,7 +3,7 @@ namespace OwnGiveSave.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Identity;
 
     using OwnGiveSave.Data.Common.Models;
@@ -28,6 +28,7 @@ namespace OwnGiveSave.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        [Required]
         public string DonorId { get; set; }
         public Donor Donor { get; set; }
 
