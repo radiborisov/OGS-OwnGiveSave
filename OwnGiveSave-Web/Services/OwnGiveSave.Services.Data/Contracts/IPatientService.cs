@@ -9,6 +9,6 @@
 
         Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        Task<IEnumerable<TModel>> GetAllByPatientIdAsync<TModel>();
+        Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>();
     }
 }

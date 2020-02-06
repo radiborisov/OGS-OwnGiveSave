@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Data.Contracts;
+    using OwnGiveSave.Services.Mapping;
 
     public class LocationService : ILocationService
     {
@@ -18,17 +20,26 @@
 
         public async Task AddLocationAsync<TModel>(TModel model)
         {
-            throw new NotImplementedException();
+            var location = AutoMapperConfig.MapperInstance.Map<Location>(model);
+
+            await this.locationRepository.AddAsync(location);
+            await this.locationRepository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
         {
-            throw new NotImplementedException();
+            return await this.locationRepository
+                .All()
+                .To<TModel>()
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllByLocationIdAsync<TModel>()
+        public async Task<IEnumerable<TModel>> GetLocationByHospitalIdAsync<TModel>()
         {
-            throw new NotImplementedException();
+            return await this.locationRepository
+                .All()
+                .To<TModel>()
+                .ToListAsync();
         }
     }
 }

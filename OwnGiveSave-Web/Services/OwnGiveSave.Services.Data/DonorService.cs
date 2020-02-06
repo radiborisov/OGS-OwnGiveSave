@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
+
+    using Microsoft.EntityFrameworkCore;
+
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Data.Contracts;
@@ -30,12 +32,12 @@
 
         public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
         {
-            throw new NotImplementedException();
+            return await this.donorRepository.All().To<TModel>().ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>()
+        public async Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>(string hospitalId)
         {
-            throw new NotImplementedException();
+            return await this.donorRepository.All().Where(x => x.DonorHospitals.Where(x => x.HospitalId == hospitalId)).To<TModel>().ToListAsync();
         }
     }
 }

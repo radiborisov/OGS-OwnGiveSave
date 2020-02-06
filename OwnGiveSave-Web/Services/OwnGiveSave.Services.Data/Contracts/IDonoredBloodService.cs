@@ -5,10 +5,10 @@
 
     public interface IDonoredBloodService
     {
-        Task AddDonoredBloodAsync<TModel>(TModel donoredBlood);
+        Task AddDonoredBloodAsync<TModel>(TModel model);
 
         Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>();
+        Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>();
     }
 }

@@ -3,10 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Microsoft.EntityFrameworkCore;
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Data.Contracts;
+    using OwnGiveSave.Services.Mapping;
 
     public class HospitalService : IHospitalService
     {
@@ -17,19 +18,28 @@
             this.hospitalRepository = hospitalRepository;
         }
 
-        public async Task AddHospitalAsync<TModel>(TModel donoredBlood)
+        public async Task AddHospitalAsync<TModel>(TModel model)
         {
-            throw new NotImplementedException();
+            var hospital = AutoMapperConfig.MapperInstance.Map<Hospital>(model);
+
+            await this.hospitalRepository.AddAsync(hospital);
+            await this.hospitalRepository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
         {
-            throw new NotImplementedException();
+            return await this.hospitalRepository
+                .All()
+                .To<TModel>()
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>()
+        public async Task<IEnumerable<TModel>> GetAllByDonorIdAsync<TModel>()
         {
-            throw new NotImplementedException();
+            return await this.hospitalRepository
+               .All()
+               .To<TModel>()
+               .ToListAsync();
         }
     }
 }

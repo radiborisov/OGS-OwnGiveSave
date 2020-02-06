@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Microsoft.EntityFrameworkCore;
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Data.Contracts;
@@ -28,12 +28,18 @@
 
         public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
         {
-            throw new NotImplementedException();
+            return await this.patientRepository
+                .All()
+                .To<TModel>()
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllByPatientIdAsync<TModel>()
+        public async Task<IEnumerable<TModel>> GetAllByHospitalIdAsync<TModel>()
         {
-            throw new NotImplementedException();
+            return await this.patientRepository
+               .All()
+               .To<TModel>()
+               .ToListAsync();
         }
     }
 }
