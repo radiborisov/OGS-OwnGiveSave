@@ -8,6 +8,7 @@
 
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
+    using OwnGiveSave.Data.Models.Enums;
     using OwnGiveSave.Services.Data.Contracts;
     using OwnGiveSave.Services.Mapping;
 
@@ -50,6 +51,15 @@
             return await this.patientRepository
                .All()
                .Where(x => x.HospitalId == hospitalId && x.NeededDonators > 0)
+               .To<TModel>()
+               .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TModel>> GetAllInNeedByHospitalIdAndTypeBloodAsync<TModel>(string hospitalId, TypeBlood typeBlood)
+        {
+            return await this.patientRepository
+               .All()
+               .Where(x => x.HospitalId == hospitalId && x.NeededDonators > 0 && x.Blood.TypeBlood == typeBlood)
                .To<TModel>()
                .ToListAsync();
         }
