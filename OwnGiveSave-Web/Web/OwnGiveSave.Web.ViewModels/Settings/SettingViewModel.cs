@@ -1,9 +1,9 @@
 ﻿namespace OwnGiveSave.Web.ViewModels.Settings
 {
+    using AutoMapper;
+
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

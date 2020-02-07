@@ -28,13 +28,11 @@
 
         public DbSet<Donor> Donors { get; set; }
 
-        public DbSet<DonoredBlood> DonoredBloods { get; set; }
-
         public DbSet<DonorHospital> DonorHospitals { get; set; }
 
         public DbSet<Hospital> Hospitals { get; set; }
 
-        public DbSet<Location> Locations { get; set; }
+        public DbSet<HospitalLocation> Locations { get; set; }
 
         public DbSet<Patient> Patients { get; set; }
 
