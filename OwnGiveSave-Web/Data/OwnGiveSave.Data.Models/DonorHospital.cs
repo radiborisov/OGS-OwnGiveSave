@@ -21,6 +21,7 @@
         public string HospitalId { get; set; }
         public Hospital Hospital { get; set; }
 
-        public decimal QuantityOfDonatedBlood { get; set; }
+        [Required]
+        public double QuantityOfDonatedBlood { get; set; }
     }
 }

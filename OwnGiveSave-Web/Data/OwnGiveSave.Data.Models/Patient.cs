@@ -23,8 +23,10 @@
         public string BloodId { get; set; }
         public Blood Blood { get; set; }
 
+        [Required]
         public DateTime DeadlineOfTheDonations { get; set; }
 
+        [Required]
         public int NeededDonators { get; set; }
     }
 }

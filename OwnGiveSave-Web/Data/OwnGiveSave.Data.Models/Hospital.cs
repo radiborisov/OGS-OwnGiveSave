@@ -22,7 +22,7 @@
 
         [Required]
         public string LocationId { get; set; }
-        public Location Location { get; set; }
+        public HospitalLocation Location { get; set; }
 
         [Required]
         public string TypeOfTheHospital { get; set; }
