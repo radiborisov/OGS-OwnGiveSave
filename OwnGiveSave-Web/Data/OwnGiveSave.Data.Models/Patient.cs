@@ -4,7 +4,6 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using OwnGiveSave.Data.Common.Models;
-    using OwnGiveSave.Data.Models.Enums;
 
     public class Patient : BaseDeletableModel<string>
     {
@@ -19,7 +18,12 @@
         public string HospitalId { get; set; }
         public Hospital Hospital { get; set; }
 
-        public TypeBlood TypeBlood { get; set; }
+        [Required]
+        [ForeignKey("Blood")]
+        public string BloodId { get; set; }
+        public Blood Blood { get; set; }
+
+        public DateTime DeadlineOfTheDonations { get; set; }
 
         public int NeededDonators { get; set; }
     }
