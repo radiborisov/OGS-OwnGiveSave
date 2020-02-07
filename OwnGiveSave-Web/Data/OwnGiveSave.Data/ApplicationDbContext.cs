@@ -61,6 +61,7 @@
             base.OnModelCreating(builder);
 
             ConfigureUserIdentityRelations(builder);
+            ConfigureDomainRelations(builder);
 
             EntityIndexesConfiguration.Configure(builder);
 
@@ -82,6 +83,29 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+        }
+
+        private static void ConfigureDomainRelations(ModelBuilder builder)
+        {
+            builder.Entity<Donor>()
+                .HasOne(x => x.Blood)
+                .WithOne(x => x.Donor)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Patient>()
+                .HasOne(x => x.Blood)
+                .WithOne(x => x.Patient)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Blood>()
+                .HasOne(x => x.Donor)
+                .WithOne(x => x.Blood)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Blood>()
+                .HasOne(x => x.Donor)
+                .WithOne(x => x.Blood)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private static void ConfigureUserIdentityRelations(ModelBuilder builder)
