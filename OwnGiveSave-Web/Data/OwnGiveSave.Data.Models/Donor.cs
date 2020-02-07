@@ -26,6 +26,8 @@
         public string BloodId { get; set; }
         public Blood Blood { get; set; }
 
+        public DateTime LastBloodDonation { get; set; }
+
         public ICollection<DonorHospital> DonorHospitals { get; set; }
     }
 }
