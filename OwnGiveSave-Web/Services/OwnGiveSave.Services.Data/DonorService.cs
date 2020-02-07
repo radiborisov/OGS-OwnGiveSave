@@ -1,6 +1,5 @@
 ﻿namespace OwnGiveSave.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -9,6 +8,7 @@
 
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
+    using OwnGiveSave.Data.Models.Enums;
     using OwnGiveSave.Services.Data.Contracts;
     using OwnGiveSave.Services.Mapping;
 
@@ -44,6 +44,24 @@
                 .All()
                 .Where(x => x.DonorHospitals
                 .Any(x => x.HospitalId == hospitalId))
+                .To<TModel>()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TModel>> GetAllByBloodTypeAsync<TModel>(TypeBlood typeBlood)
+        {
+            return await this.donorRepository
+                 .All()
+                 .Where(x => x.Blood.TypeBlood == typeBlood)
+                 .To<TModel>()
+                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TModel>> GetAllByHospitalIdAndBloodTypeAsync<TModel>(string hospitalId, TypeBlood typeBlood)
+        {
+            return await this.donorRepository
+                .All()
+                .Where(x => x.Blood.TypeBlood == typeBlood && x.DonorHospitals.Any(x => x.HospitalId == hospitalId))
                 .To<TModel>()
                 .ToListAsync();
         }

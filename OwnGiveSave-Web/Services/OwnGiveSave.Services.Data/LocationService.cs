@@ -1,9 +1,11 @@
 ﻿namespace OwnGiveSave.Services.Data
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using OwnGiveSave.Data.Common.Repositories;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Data.Contracts;
@@ -11,16 +13,16 @@
 
     public class LocationService : ILocationService
     {
-        private readonly IDeletableEntityRepository<Location> locationRepository;
+        private readonly IDeletableEntityRepository<HospitalLocation> locationRepository;
 
-        public LocationService(IDeletableEntityRepository<Location> locationRepository)
+        public LocationService(IDeletableEntityRepository<HospitalLocation> locationRepository)
         {
             this.locationRepository = locationRepository;
         }
 
         public async Task AddLocationAsync<TModel>(TModel model)
         {
-            var location = AutoMapperConfig.MapperInstance.Map<Location>(model);
+            var location = AutoMapperConfig.MapperInstance.Map<HospitalLocation>(model);
 
             await this.locationRepository.AddAsync(location);
             await this.locationRepository.SaveChangesAsync();
@@ -34,9 +36,13 @@
                 .ToListAsync();
         }
 
-        //public async Task<IEnumerable<TModel>> GetLocationByHospitalIdAsync<TModel>(string hospitalId)
-        //{
-        //    return await this.locationRepository.All().FirstOrDefaultAsync(x => x.)
-        //}
+        public async Task<IEnumerable<TModel>> GetLocationByHospitalIdAsync<TModel>(string hospitalId)
+        {
+            return await this.locationRepository
+                .All()
+                .Where(x => x.HospitalId == hospitalId)
+                .To<TModel>()
+                .ToListAsync();
+        }
     }
 }

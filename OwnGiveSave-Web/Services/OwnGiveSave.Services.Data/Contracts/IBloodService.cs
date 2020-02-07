@@ -1,10 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OwnGiveSave.Services.Data.Contracts
+﻿namespace OwnGiveSave.Services.Data.Contracts
 {
-    class IBloodService
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using OwnGiveSave.Data.Models.Enums;
+
+    public interface IBloodService
     {
+        Task AddBloodAsync<TModel>(TModel model);
+
+        Task<IEnumerable<TModel>> GetAllAsync<TModel>();
+
+        Task<IEnumerable<TModel>> GetAllByBloodTypeAsync<TModel>(TypeBlood typeBlood);
+
+        Task<IEnumerable<TModel>> GetAllByBloodTypeAndPositivityAsync<TModel>(TypeBlood typeBlood, bool isPositive);
+
+        Task<TModel> GetBloodByDonorIdAsync<TModel>(string donorId);
+
+        Task<TModel> GetBloodByPatientIdAsync<TModel>(string patientId);
     }
 }
