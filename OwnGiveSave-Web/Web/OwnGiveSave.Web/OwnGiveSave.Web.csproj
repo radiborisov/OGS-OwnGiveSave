@@ -49,4 +49,9 @@
     <ProjectReference Include="..\OwnGiveSave.Web.Infrastructure\OwnGiveSave.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\OwnGiveSave.Web.ViewModels\OwnGiveSave.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\About\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
 </Project>
