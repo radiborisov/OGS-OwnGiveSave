@@ -7,22 +7,31 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
 
     <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
 
     <!-- ElegantFonts CSS -->
-    <link rel="stylesheet" href="css/elegant-fonts.css">
+    <link rel="stylesheet" href="~/css/elegant-fonts.css">
 
     <!-- themify-icons CSS -->
-    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="~/css/themify-icons.css">
 
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="~/css/swiper.min.css">
 
     <!-- Styles -->
     <link rel="stylesheet" href="~/css/style.css">
+
+    <script type='text/javascript' src='~/js/jquery.js'></script>
+    <script type='text/javascript' src='~/js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='~/js/swiper.min.js'></script>
+    <script type='text/javascript' src='~/js/jquery.countdown.min.js'></script>
+    <script type='text/javascript' src='~/js/circle-progress.min.js'></script>
+    <script type='text/javascript' src='~/js/jquery.countTo.min.js'></script>
+    <script type='text/javascript' src='~/js/jquery.barfiller.js'></script>
+    <script type='text/javascript' src='~/js/custom.js'></script>
 </head>
 <body class="single-page news-page">
     <header class="site-header">
@@ -88,7 +97,7 @@
                     </style>
 
                     <div class="dropdown">
-                        <button class="dropbtn"><img src="images/add48.png" alt=""></a></button>
+                        <button class="dropbtn"><img src="~/images/add48.png" alt=""></button>
                         <div class="dropdown-content">
                             <a href="#">Link 1</a>
                             <a href="#">Link 2</a>
@@ -104,7 +113,7 @@
                 <div class="row">
                     <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
                         <div class="site-branding d-flex align-items-center">
-                            <a class="d-block" href="index.html" rel="home"><img class="d-block" src="images/logo.png" alt="logo"></a>
+                            <a class="d-block" href="index.html" rel="home"><img class="d-block" src="~/images/logo.png" alt="logo"></a>
                         </div><!-- .site-branding -->
 
                         <nav class="site-navigation d-flex justify-content-end align-items-center">
@@ -142,7 +151,7 @@
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="foot-about">
-                            <h2><a class="foot-logo" href="#"><img src="images/foot-logo.png" alt=""></a></h2>
+                            <h2><a class="foot-logo" href="#"><img src="~/images/foot-logo.png" alt=""></a></h2>
 
                             <p>Lorem ipsum dolor sit amet, con sectetur adipiscing elit. Mauris temp us vestib ulum mauris.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.Lorem ipsum dolo.</p>
 
@@ -232,14 +241,7 @@
         </div><!-- .footer-bar -->
     </footer><!-- .site-footer -->
 
-    <script type='text/javascript' src='js/jquery.js'></script>
-    <script type='text/javascript' src='js/jquery.collapsible.min.js'></script>
-    <script type='text/javascript' src='js/swiper.min.js'></script>
-    <script type='text/javascript' src='js/jquery.countdown.min.js'></script>
-    <script type='text/javascript' src='js/circle-progress.min.js'></script>
-    <script type='text/javascript' src='js/jquery.countTo.min.js'></script>
-    <script type='text/javascript' src='js/jquery.barfiller.js'></script>
-    <script type='text/javascript' src='js/custom.js'></script>
+
 
     @this.RenderSection("Scripts", required: false)
 </body>
