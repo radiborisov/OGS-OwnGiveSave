@@ -135,14 +135,14 @@
             // Seed data on application startup
             //using (var serviceScope = app.ApplicationServices.CreateScope())
             //{
-            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<OwnGiveSaveDbContext>();
 
             //    if (env.IsDevelopment())
             //    {
             //        dbContext.Database.Migrate();
             //    }
 
-            //    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            //    new OwnGiveSaveDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             //}
 
             //using (var serviceScope = app.ApplicationServices.CreateScope())

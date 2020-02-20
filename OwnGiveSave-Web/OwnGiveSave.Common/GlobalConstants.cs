@@ -4,6 +4,8 @@
     {
         public const string SystemName = "OwnGiveSave";
 
+        public const string HospitalRoleName = "Hospital";
+
         public const string AdministratorRoleName = "Administrator";
 
         public const string AdministartorJsonUserName = "AdministartorInfo:UserName";

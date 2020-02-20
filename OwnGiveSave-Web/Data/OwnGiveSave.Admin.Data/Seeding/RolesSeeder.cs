@@ -19,6 +19,7 @@
             var roleManager = serviceProvider.GetRequiredService<RoleManager<OwnGiveSaveAdminRole>>();
 
             await SeedRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
+            await SeedRoleAsync(roleManager, GlobalConstants.HospitalRoleName);
         }
 
         private static async Task SeedRoleAsync(RoleManager<OwnGiveSaveAdminRole> roleManager, string roleName)
