@@ -2,10 +2,11 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Configuration;
     using OwnGiveSave.Admin.Data;
 
     public interface ISeeder
     {
-        Task SeedAsync(ApplicationAdminDbContext dbContext, IServiceProvider serviceProvider);
+        Task SeedAsync(OwnGiveSaveAdminDbContext dbContext, IServiceProvider serviceProvider, IConfiguration configuration);
     }
 }

@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OwnGiveSave.Admin.Data;
 
 namespace OwnGiveSave.Admin.Data.Migrations
 {
-    [DbContext(typeof(ApplicationAdminDbContext))]
-    [Migration("20200202210935_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(OwnGiveSaveAdminDbContext))]
+    partial class OwnGiveSaveAdminDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,7 +123,7 @@ namespace OwnGiveSave.Admin.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OwnGiveSave.Admin.Data.Models.ApplicationAdminRole", b =>
+            modelBuilder.Entity("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -166,7 +164,7 @@ namespace OwnGiveSave.Admin.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("OwnGiveSave.Admin.Data.Models.ApplicationAdminUser", b =>
+            modelBuilder.Entity("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -247,7 +245,7 @@ namespace OwnGiveSave.Admin.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("OwnGiveSave.Admin.Data.Models.ApplicationAdminRole", null)
+                    b.HasOne("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -256,7 +254,7 @@ namespace OwnGiveSave.Admin.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("OwnGiveSave.Admin.Data.Models.ApplicationAdminUser", null)
+                    b.HasOne("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminUser", null)
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -265,7 +263,7 @@ namespace OwnGiveSave.Admin.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("OwnGiveSave.Admin.Data.Models.ApplicationAdminUser", null)
+                    b.HasOne("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminUser", null)
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -274,13 +272,13 @@ namespace OwnGiveSave.Admin.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("OwnGiveSave.Admin.Data.Models.ApplicationAdminRole", null)
+                    b.HasOne("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("OwnGiveSave.Admin.Data.Models.ApplicationAdminUser", null)
+                    b.HasOne("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminUser", null)
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -289,7 +287,7 @@ namespace OwnGiveSave.Admin.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("OwnGiveSave.Admin.Data.Models.ApplicationAdminUser", null)
+                    b.HasOne("OwnGiveSave.Admin.Data.Models.OwnGiveSaveAdminUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)

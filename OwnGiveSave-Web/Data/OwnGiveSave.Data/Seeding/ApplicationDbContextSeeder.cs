@@ -9,7 +9,7 @@
 
     public class ApplicationDbContextSeeder : ISeeder
     {
-        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(OwnGiveSaveDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext == null)
             {

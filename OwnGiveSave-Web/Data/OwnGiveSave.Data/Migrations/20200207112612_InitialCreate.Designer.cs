@@ -9,7 +9,7 @@ using OwnGiveSave.Data;
 
 namespace OwnGiveSave.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(OwnGiveSaveDbContext))]
     [Migration("20200207112612_InitialCreate")]
     partial class InitialCreate
     {

@@ -11,7 +11,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.EntityFrameworkCore.Storage;
 
-    internal static class EfAdminExpressionHelper
+    internal static class AdminEfExpressionHelper
     {
         private static readonly Type StringType = typeof(string);
         private static readonly MethodInfo ValueBufferGetValueMethod =

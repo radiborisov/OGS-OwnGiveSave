@@ -49,14 +49,14 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationAdminDbContext>(
+            services.AddDbContext<OwnGiveSaveAdminDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("AdminConnection")));
 
-            services.AddDbContext<ApplicationDbContext>(
+            services.AddDbContext<OwnGiveSaveDbContext>(
               options => options.UseSqlServer(this.configuration.GetConnectionString("UserConnection")));
 
-            services.AddDefaultIdentity<ApplicationAdminUser>(AdminIdentityOptionsProvider.GetIdentityOptions)
-                            .AddRoles<ApplicationAdminRole>().AddEntityFrameworkStores<ApplicationAdminDbContext>();
+            services.AddDefaultIdentity<OwnGiveSaveAdminUser>(AdminIdentityOptionsProvider.GetIdentityOptions)
+                            .AddRoles<OwnGiveSaveAdminRole>().AddEntityFrameworkStores<OwnGiveSaveAdminDbContext>();
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -93,7 +93,7 @@
                 });
 
             services
-                .AddIdentityCore<ApplicationUser>(options =>
+                .AddIdentityCore<OwnGiveSaveUser>(options =>
                 {
                     options.Password.RequiredLength = 6;
                     options.Password.RequireDigit = false;
@@ -101,8 +101,8 @@
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
-                .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddRoles<OwnGiveSaveRole>()
+                .AddEntityFrameworkStores<OwnGiveSaveDbContext>()
                 .AddUserStore<OwnGiveSaveUserStore>()
                 .AddRoleStore<OwnGiveSaveRoleStore>()
                 .AddDefaultTokenProviders();
@@ -115,7 +115,7 @@
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfAdminDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfAdminRepository<>));
-            services.AddScoped<IDbQueryRunner, DbAdminQueryRunner>();
+            services.AddScoped<IDbQueryRunner, AdminDbQueryRunner>();
 
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -145,17 +145,17 @@
             //    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             //}
 
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationAdminDbContext>();
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<OwnGiveSaveAdminDbContext>();
 
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
+            //    if (env.IsDevelopment())
+            //    {
+            //        dbContext.Database.Migrate();
+            //    }
 
-                new ApplicationAdminDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            }
+            //    new OwnGiveSaveAdminDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider, this.configuration).GetAwaiter().GetResult();
+            //}
 
             if (env.IsDevelopment())
             {
@@ -194,7 +194,7 @@
         {
             var email = context.Request.Form["email"];
 
-            var userManager = context.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+            var userManager = context.RequestServices.GetRequiredService<UserManager<OwnGiveSaveUser>>();
             var user = await userManager.FindByEmailAsync(email);
             if (user == null || user.IsDeleted)
             {

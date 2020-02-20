@@ -11,7 +11,7 @@
     public class EfAdminRepository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        public EfAdminRepository(ApplicationAdminDbContext context)
+        public EfAdminRepository(OwnGiveSaveAdminDbContext context)
         {
             this.Context = context ?? throw new ArgumentNullException(nameof(context));
             this.DbSet = this.Context.Set<TEntity>();
@@ -19,7 +19,7 @@
 
         protected DbSet<TEntity> DbSet { get; set; }
 
-        protected ApplicationAdminDbContext Context { get; set; }
+        protected OwnGiveSaveAdminDbContext Context { get; set; }
 
         public virtual IQueryable<TEntity> All() => this.DbSet;
 

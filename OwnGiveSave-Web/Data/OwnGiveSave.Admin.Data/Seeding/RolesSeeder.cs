@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     using OwnGiveSave.Admin.Data;
@@ -13,19 +14,19 @@
 
     internal class RolesSeeder : ISeeder
     {
-        public async Task SeedAsync(ApplicationAdminDbContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(OwnGiveSaveAdminDbContext dbContext, IServiceProvider serviceProvider, IConfiguration configuration)
         {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationAdminRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<OwnGiveSaveAdminRole>>();
 
             await SeedRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
         }
 
-        private static async Task SeedRoleAsync(RoleManager<ApplicationAdminRole> roleManager, string roleName)
+        private static async Task SeedRoleAsync(RoleManager<OwnGiveSaveAdminRole> roleManager, string roleName)
         {
             var role = await roleManager.FindByNameAsync(roleName);
             if (role == null)
             {
-                var result = await roleManager.CreateAsync(new ApplicationAdminRole(roleName));
+                var result = await roleManager.CreateAsync(new OwnGiveSaveAdminRole(roleName));
                 if (!result.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));

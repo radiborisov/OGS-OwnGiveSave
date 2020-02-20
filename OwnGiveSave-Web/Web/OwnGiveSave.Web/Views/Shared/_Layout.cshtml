@@ -115,18 +115,46 @@
                         <div class="site-branding d-flex align-items-center">
                             <a class="d-block" href="index.html" rel="home"><img class="d-block" src="~/images/logo.png" alt="logo"></a>
                         </div><!-- .site-branding -->
-
-                        <nav class="site-navigation d-flex justify-content-end align-items-center">
-                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                <li class="current-menu-item"><a href="/Home/Index">Начало</a></li>
-                                <li><a href="/Home/About">За нас</a></li>
-                                <li><a href="causes.html">Инициативи</a></li>
-                                <li><a href="portfolio.html">Мобилно приложение</a></li>
-                                <li><a href="news.html">Карта</a></li>
-                            </ul>
-                        </nav><!-- .site-navigation -->
-
-
+                        @if (this.User.Identity.IsAuthenticated && this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        {
+                            <nav class="site-navigation d-flex justify-content-end align-items-center">
+                                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="/Home/Index">Начало</a></li>
+                                    <li><a href="/Home/About">За нас</a></li>
+                                    <li><a href="/Home/Causes">Инициативи</a></li>
+                                    <li><a href="portfolio.html">Мобилно приложение</a></li>
+                                    <li><a href="news.html">Карта</a></li>
+                                    <li><a href="/Administration/Dashboard/Index">Dashboard</a></li>
+                                    <li><a href="/Identity/Account/Logout">Излез</a></li>
+                                </ul>
+                            </nav><!-- .site-navigation -->
+                        }
+                        else if (this.User.Identity.IsAuthenticated)
+                        {
+                            <nav class="site-navigation d-flex justify-content-end align-items-center">
+                                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="/Home/Index">Начало</a></li>
+                                    <li><a href="/Home/About">За нас</a></li>
+                                    <li><a href="/Home/Causes">Инициативи</a></li>
+                                    <li><a href="portfolio.html">Мобилно приложение</a></li>
+                                    <li><a href="news.html">Карта</a></li>
+                                    <li><a href="/Identity/Account/Logout">Излез</a></li>
+                                </ul>
+                            </nav><!-- .site-navigation -->
+                        }
+                        else
+                        {
+                            <nav class="site-navigation d-flex justify-content-end align-items-center">
+                                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="/Home/Index">Начало</a></li>
+                                    <li><a href="/Home/About">За нас</a></li>
+                                    <li><a href="/Home/Causes">Инициативи</a></li>
+                                    <li><a href="portfolio.html">Мобилно приложение</a></li>
+                                    <li><a href="news.html">Карта</a></li>
+                                    <li><a href="/Identity/Account/Login">Влез</a></li>
+                                </ul>
+                            </nav><!-- .site-navigation -->
+                        }
 
                         <div class="hamburger-menu d-lg-none">
                             <span></span>

@@ -12,7 +12,7 @@
     public class EfAdminDeletableEntityRepository<TEntity> : EfAdminRepository<TEntity>, IDeletableEntityRepository<TEntity>
         where TEntity : class, IDeletableEntity
     {
-        public EfAdminDeletableEntityRepository(ApplicationAdminDbContext context)
+        public EfAdminDeletableEntityRepository(OwnGiveSaveAdminDbContext context)
             : base(context)
         {
         }
@@ -27,7 +27,7 @@
 
         public Task<TEntity> GetByIdWithDeletedAsync(params object[] id)
         {
-            var getByIdPredicate = EfAdminExpressionHelper.BuildByIdPredicate<TEntity>(this.Context, id);
+            var getByIdPredicate = AdminEfExpressionHelper.BuildByIdPredicate<TEntity>(this.Context, id);
             return this.AllWithDeleted().FirstOrDefaultAsync(getByIdPredicate);
         }
 

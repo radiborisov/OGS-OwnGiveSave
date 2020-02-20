@@ -7,9 +7,9 @@
     using OwnGiveSave.Data.Models;
 
     public class OwnGiveSaveUserStore : UserStore<
-       ApplicationUser,
-        ApplicationRole,
-        ApplicationDbContext,
+       OwnGiveSaveUser,
+        OwnGiveSaveRole,
+        OwnGiveSaveDbContext,
         string,
         IdentityUserClaim<string>,
         IdentityUserRole<string>,
@@ -17,24 +17,24 @@
         IdentityUserToken<string>,
         IdentityRoleClaim<string>>
     {
-        public OwnGiveSaveUserStore(ApplicationDbContext context, IdentityErrorDescriber describer = null)
+        public OwnGiveSaveUserStore(OwnGiveSaveDbContext context, IdentityErrorDescriber describer = null)
             : base(context, describer)
         {
         }
 
-        protected override IdentityUserRole<string> CreateUserRole(ApplicationUser user, ApplicationRole role)
+        protected override IdentityUserRole<string> CreateUserRole(OwnGiveSaveUser user, OwnGiveSaveRole role)
         {
             return new IdentityUserRole<string> { RoleId = role.Id, UserId = user.Id };
         }
 
-        protected override IdentityUserClaim<string> CreateUserClaim(ApplicationUser user, Claim claim)
+        protected override IdentityUserClaim<string> CreateUserClaim(OwnGiveSaveUser user, Claim claim)
         {
             var identityUserClaim = new IdentityUserClaim<string> { UserId = user.Id };
             identityUserClaim.InitializeFromClaim(claim);
             return identityUserClaim;
         }
 
-        protected override IdentityUserLogin<string> CreateUserLogin(ApplicationUser user, UserLoginInfo login) =>
+        protected override IdentityUserLogin<string> CreateUserLogin(OwnGiveSaveUser user, UserLoginInfo login) =>
             new IdentityUserLogin<string>
             {
                 UserId = user.Id,
@@ -44,7 +44,7 @@
             };
 
         protected override IdentityUserToken<string> CreateUserToken(
-            ApplicationUser user,
+            OwnGiveSaveUser user,
             string loginProvider,
             string name,
             string value)

@@ -1,5 +1,5 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace OwnGiveSave.Data.Models
+namespace OwnGiveSave.Admin.Data.Models
 {
     using System;
 
@@ -7,14 +7,14 @@ namespace OwnGiveSave.Data.Models
 
     using OwnGiveSave.Data.Common.Models;
 
-    public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
+    public class OwnGiveSaveAdminRole : IdentityRole, IAuditInfo, IDeletableEntity
     {
-        public ApplicationRole()
+        public OwnGiveSaveAdminRole()
             : this(null)
         {
         }
 
-        public ApplicationRole(string name)
+        public OwnGiveSaveAdminRole(string name)
             : base(name)
         {
             this.Id = Guid.NewGuid().ToString();

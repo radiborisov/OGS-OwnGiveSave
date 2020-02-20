@@ -12,10 +12,10 @@
     [AllowAnonymous]
     public class AccountController : ApiBasicController
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<OwnGiveSaveUser> userManager;
         private readonly IPatientService patientService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IPatientService patientService)
+        public AccountController(UserManager<OwnGiveSaveUser> userManager, IPatientService patientService)
         {
             this.userManager = userManager;
             this.patientService = patientService;
@@ -29,7 +29,7 @@
                 return this.BadRequest();
             }
 
-            var user = new ApplicationUser { Email = model.Email, UserName = model.Email };
+            var user = new OwnGiveSaveUser { Email = model.Email, UserName = model.Email };
             var result = await this.userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

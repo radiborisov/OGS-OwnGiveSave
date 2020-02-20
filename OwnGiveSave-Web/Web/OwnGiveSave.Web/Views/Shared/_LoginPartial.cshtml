@@ -1,8 +1,8 @@
 ﻿@using OwnGiveSave.Common
 @using OwnGiveSave.Admin.Data.Models
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<ApplicationAdminUser> SignInManager
-@inject UserManager<ApplicationAdminUser> UserManager
+@inject SignInManager<OwnGiveSaveAdminUser> SignInManager
+@inject UserManager<OwnGiveSaveAdminUser> UserManager
 
 <ul class="navbar-nav">
     @if (this.SignInManager.IsSignedIn(this.User))

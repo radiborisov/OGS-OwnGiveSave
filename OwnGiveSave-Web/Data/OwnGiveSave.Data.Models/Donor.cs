@@ -19,7 +19,7 @@
         [Required]
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public OwnGiveSaveUser ApplicationUser { get; set; }
 
         [Required]
         [ForeignKey("Blood")]

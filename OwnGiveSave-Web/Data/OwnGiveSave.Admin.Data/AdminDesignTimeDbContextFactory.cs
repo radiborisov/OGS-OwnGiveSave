@@ -6,20 +6,20 @@
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
 
-    public class DesignTimeDbAdminContextFactory : IDesignTimeDbContextFactory<ApplicationAdminDbContext>
+    public class AdminDesignTimeDbContextFactory : IDesignTimeDbContextFactory<OwnGiveSaveAdminDbContext>
     {
-        public ApplicationAdminDbContext CreateDbContext(string[] args)
+        public OwnGiveSaveAdminDbContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            var builder = new DbContextOptionsBuilder<ApplicationAdminDbContext>();
+            var builder = new DbContextOptionsBuilder<OwnGiveSaveAdminDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             builder.UseSqlServer(connectionString);
 
-            return new ApplicationAdminDbContext(builder.Options);
+            return new OwnGiveSaveAdminDbContext(builder.Options);
         }
     }
 }

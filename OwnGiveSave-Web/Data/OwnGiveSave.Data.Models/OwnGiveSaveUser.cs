@@ -1,16 +1,16 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace OwnGiveSave.Admin.Data.Models
+namespace OwnGiveSave.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Identity;
 
     using OwnGiveSave.Data.Common.Models;
 
-    public class ApplicationAdminUser : IdentityUser, IAuditInfo, IDeletableEntity
+    public class OwnGiveSaveUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
-        public ApplicationAdminUser()
+        public OwnGiveSaveUser()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Roles = new HashSet<IdentityUserRole<string>>();
@@ -27,6 +27,10 @@ namespace OwnGiveSave.Admin.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        [Required]
+        public string DonorId { get; set; }
+        public Donor Donor { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

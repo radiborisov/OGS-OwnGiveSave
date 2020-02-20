@@ -6,14 +6,14 @@
     using Microsoft.EntityFrameworkCore;
     using OwnGiveSave.Data.Common;
 
-    public class DbAdminQueryRunner : IDbQueryRunner
+    public class AdminDbQueryRunner : IDbQueryRunner
     {
-        public DbAdminQueryRunner(ApplicationAdminDbContext context)
+        public AdminDbQueryRunner(OwnGiveSaveAdminDbContext context)
         {
             this.Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public ApplicationAdminDbContext Context { get; set; }
+        public OwnGiveSaveAdminDbContext Context { get; set; }
 
         public Task RunQueryAsync(string query, params object[] parameters)
         {

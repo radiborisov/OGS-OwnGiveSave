@@ -1,4 +1,4 @@
-﻿namespace OwnGiveSave.Admin.Data
+﻿namespace OwnGiveSave.Data
 {
     using System;
     using System.Linq;
@@ -8,20 +8,33 @@
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using OwnGiveSave.Admin.Data.Models;
-    using OwnGiveSave.Data.Common.Models;
 
-    public class ApplicationAdminDbContext : IdentityDbContext<ApplicationAdminUser, ApplicationAdminRole, string>
+    using OwnGiveSave.Data.Common.Models;
+    using OwnGiveSave.Data.Models;
+
+    public class OwnGiveSaveDbContext : IdentityDbContext<OwnGiveSaveUser, OwnGiveSaveRole, string>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
-            typeof(ApplicationAdminDbContext).GetMethod(
+            typeof(OwnGiveSaveDbContext).GetMethod(
                 nameof(SetIsDeletedQueryFilter),
                 BindingFlags.NonPublic | BindingFlags.Static);
 
-        public ApplicationAdminDbContext(DbContextOptions<ApplicationAdminDbContext> options)
+        public OwnGiveSaveDbContext(DbContextOptions<OwnGiveSaveDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Donor> Donors { get; set; }
+
+        public DbSet<DonorHospital> DonorHospitals { get; set; }
+
+        public DbSet<Hospital> Hospitals { get; set; }
+
+        public DbSet<HospitalLocation> Locations { get; set; }
+
+        public DbSet<Patient> Patients { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -48,8 +61,9 @@
             base.OnModelCreating(builder);
 
             ConfigureUserIdentityRelations(builder);
+            ConfigureDomainRelations(builder);
 
-            AdminEntityIndexesConfiguration.Configure(builder);
+            EntityIndexesConfiguration.Configure(builder);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 
@@ -71,27 +85,55 @@
             }
         }
 
+        private static void ConfigureDomainRelations(ModelBuilder builder)
+        {
+            builder.Entity<Donor>()
+                .HasOne(x => x.Blood)
+                .WithOne(x => x.Donor)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Patient>()
+                .HasOne(x => x.Blood)
+                .WithOne(x => x.Patient)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Blood>()
+                .HasOne(x => x.Donor)
+                .WithOne(x => x.Blood)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Blood>()
+                .HasOne(x => x.Donor)
+                .WithOne(x => x.Blood)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
         private static void ConfigureUserIdentityRelations(ModelBuilder builder)
         {
-            builder.Entity<ApplicationAdminUser>()
+            builder.Entity<OwnGiveSaveUser>()
                 .HasMany(e => e.Claims)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<ApplicationAdminUser>()
+            builder.Entity<OwnGiveSaveUser>()
                 .HasMany(e => e.Logins)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<ApplicationAdminUser>()
+            builder.Entity<OwnGiveSaveUser>()
                 .HasMany(e => e.Roles)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<OwnGiveSaveUser>()
+                .HasOne(e => e.Donor)
+                .WithOne(e => e.ApplicationUser)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
