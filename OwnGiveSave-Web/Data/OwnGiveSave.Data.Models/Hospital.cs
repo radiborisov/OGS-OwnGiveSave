@@ -5,8 +5,9 @@
     using System.ComponentModel.DataAnnotations;
 
     using OwnGiveSave.Data.Common.Models;
+    using OwnGiveSave.Services.Mapping;
 
-    public class Hospital : BaseDeletableModel<string>
+    public class Hospital : BaseDeletableModel<string>, IMapTo<Hospital>
     {
         public Hospital()
         {
@@ -18,9 +19,11 @@
         }
 
         [Required]
-        public string Name { get; set; }
+        public string HospitalName { get; set; }
 
         [Required]
+        public string Name { get; set; }
+
         public string LocationId { get; set; }
         public HospitalLocation Location { get; set; }
 

@@ -5,8 +5,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using OwnGiveSave.Data.Common.Models;
+    using OwnGiveSave.Services.Mapping;
 
-    public class Donor : BaseDeletableModel<string>
+    public class Donor : BaseDeletableModel<string>, IMapTo<Donor>
     {
         public Donor()
         {

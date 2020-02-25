@@ -5,8 +5,9 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using OwnGiveSave.Data.Common.Models;
     using OwnGiveSave.Data.Models.Enums;
+    using OwnGiveSave.Services.Mapping;
 
-    public class Blood : BaseDeletableModel<string>
+    public class Blood : BaseDeletableModel<string>, IMapTo<Blood>
     {
         public Blood()
         {

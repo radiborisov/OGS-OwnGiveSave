@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\OwnGiveSave.Services.Mapping\OwnGiveSave.Services.Mapping.csproj" />
     <ProjectReference Include="..\OwnGiveSave.Data.Common\OwnGiveSave.Data.Common.csproj" />
   </ItemGroup>
   

@@ -5,8 +5,9 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     using OwnGiveSave.Data.Common.Models;
+    using OwnGiveSave.Services.Mapping;
 
-    public class HospitalLocation : BaseDeletableModel<string>
+    public class HospitalLocation : BaseDeletableModel<string>, IMapTo<HospitalLocation>
     {
         public HospitalLocation()
         {

@@ -4,8 +4,9 @@
     using System.ComponentModel.DataAnnotations;
 
     using OwnGiveSave.Data.Common.Models;
+    using OwnGiveSave.Services.Mapping;
 
-    public class DonorHospital : BaseDeletableModel<string>
+    public class DonorHospital : BaseDeletableModel<string>, IMapTo<DonorHospital>
     {
         public DonorHospital()
         {
@@ -22,6 +23,6 @@
         public Hospital Hospital { get; set; }
 
         [Required]
-        public double QuantityOfDonatedBlood { get; set; }
+        public double LitersOfDonatedBlood { get; set; }
     }
 }

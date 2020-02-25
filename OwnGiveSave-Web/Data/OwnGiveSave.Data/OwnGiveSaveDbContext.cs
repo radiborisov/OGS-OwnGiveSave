@@ -106,6 +106,10 @@
                 .HasOne(x => x.Donor)
                 .WithOne(x => x.Blood)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Hospital>()
+                .HasIndex(x => x.HospitalName)
+                .IsUnique();
         }
 
         private static void ConfigureUserIdentityRelations(ModelBuilder builder)

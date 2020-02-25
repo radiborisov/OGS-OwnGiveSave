@@ -4,8 +4,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using OwnGiveSave.Data.Common.Models;
+    using OwnGiveSave.Services.Mapping;
 
-    public class Patient : BaseDeletableModel<string>
+    public class Patient : BaseDeletableModel<string>, IMapTo<Patient>
     {
         public Patient()
         {
