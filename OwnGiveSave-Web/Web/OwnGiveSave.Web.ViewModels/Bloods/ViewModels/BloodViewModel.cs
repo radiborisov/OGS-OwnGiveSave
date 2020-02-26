@@ -6,6 +6,8 @@
 
     public class BloodViewModel : IMapFrom<Blood>
     {
+        public string Id { get; set; }
+
         public TypeBlood TypeBlood { get; set; }
 
         public bool IsBloodPositive { get; set; }

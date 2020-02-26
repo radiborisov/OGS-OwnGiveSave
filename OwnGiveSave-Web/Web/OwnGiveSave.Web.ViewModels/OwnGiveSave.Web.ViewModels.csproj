@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="Bloods\BindingModels\" />
     <Folder Include="Hospitals\BindingModels\" />
-    <Folder Include="Patiens\BindingModels\" />
   </ItemGroup>
 
 </Project>
