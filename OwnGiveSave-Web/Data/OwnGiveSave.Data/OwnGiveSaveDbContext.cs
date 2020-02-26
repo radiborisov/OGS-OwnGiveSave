@@ -28,7 +28,7 @@
 
         public DbSet<Donor> Donors { get; set; }
 
-        public DbSet<DonorHospital> DonorHospitals { get; set; }
+        public DbSet<DonorHospitalPatient> DonorHospitals { get; set; }
 
         public DbSet<Hospital> Hospitals { get; set; }
 
@@ -87,26 +87,6 @@
 
         private static void ConfigureDomainRelations(ModelBuilder builder)
         {
-            builder.Entity<Donor>()
-                .HasOne(x => x.Blood)
-                .WithOne(x => x.Donor)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Patient>()
-                .HasOne(x => x.Blood)
-                .WithOne(x => x.Patient)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Blood>()
-                .HasOne(x => x.Donor)
-                .WithOne(x => x.Blood)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Blood>()
-                .HasOne(x => x.Donor)
-                .WithOne(x => x.Blood)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.Entity<Hospital>()
                 .HasIndex(x => x.HospitalName)
                 .IsUnique();
@@ -137,7 +117,7 @@
 
             builder.Entity<OwnGiveSaveUser>()
                 .HasOne(e => e.Donor)
-                .WithOne(e => e.ApplicationUser)
+                .WithOne(e => e.OwnGiveSaveUser)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
