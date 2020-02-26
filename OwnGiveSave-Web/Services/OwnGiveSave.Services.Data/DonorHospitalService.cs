@@ -13,16 +13,16 @@
 
     public class DonorHospitalService : IDonorHospitalService
     {
-        private readonly IDeletableEntityRepository<DonorHospital> donorHospitalRepository;
+        private readonly IDeletableEntityRepository<DonorHospitalPatient> donorHospitalRepository;
 
-        public DonorHospitalService(IDeletableEntityRepository<DonorHospital> donorHospitalRepository)
+        public DonorHospitalService(IDeletableEntityRepository<DonorHospitalPatient> donorHospitalRepository)
         {
             this.donorHospitalRepository = donorHospitalRepository;
         }
 
         public async Task AddDonorHospitalAsync<TModel>(TModel model)
         {
-            var donorHospital = AutoMapperConfig.MapperInstance.Map<DonorHospital>(model);
+            var donorHospital = AutoMapperConfig.MapperInstance.Map<DonorHospitalPatient>(model);
 
             await this.donorHospitalRepository.AddAsync(donorHospital);
             await this.donorHospitalRepository.SaveChangesAsync();

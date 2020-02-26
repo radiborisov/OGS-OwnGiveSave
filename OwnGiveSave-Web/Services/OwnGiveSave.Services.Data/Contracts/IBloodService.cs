@@ -14,9 +14,5 @@
         Task<IEnumerable<TModel>> GetAllByBloodTypeAsync<TModel>(TypeBlood typeBlood);
 
         Task<IEnumerable<TModel>> GetAllByBloodTypeAndPositivityAsync<TModel>(TypeBlood typeBlood, bool isPositive);
-
-        Task<TModel> GetBloodByDonorIdAsync<TModel>(string donorId);
-
-        Task<TModel> GetBloodByPatientIdAsync<TModel>(string patientId);
     }
 }

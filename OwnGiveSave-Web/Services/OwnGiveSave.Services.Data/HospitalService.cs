@@ -43,5 +43,10 @@
                .To<TModel>()
                .ToListAsync();
         }
+
+        public async Task<TModel> GetHospitalByHospitalUsername<TModel>(string hospitalUsername)
+        {
+            return AutoMapperConfig.MapperInstance.Map<TModel>(await this.hospitalRepository.All().FirstOrDefaultAsync(x => x.HospitalName == hospitalUsername));
+        }
     }
 }

@@ -54,21 +54,5 @@
                .To<TModel>()
                .ToListAsync();
         }
-
-        public async Task<TModel> GetBloodByDonorIdAsync<TModel>(string donorId)
-        {
-            return AutoMapperConfig.MapperInstance.Map<TModel>(
-                await this.bloodRepository
-               .All()
-               .FirstOrDefaultAsync(x => x.DonorId == donorId));
-        }
-
-        public async Task<TModel> GetBloodByPatientIdAsync<TModel>(string patientId)
-        {
-            return AutoMapperConfig.MapperInstance.Map<TModel>(
-                 await this.bloodRepository
-                .All()
-                .FirstOrDefaultAsync(x => x.PatientId == patientId));
-        }
     }
 }
