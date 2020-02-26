@@ -21,7 +21,7 @@
 
         Task<IEnumerable<TModel>> GetAllInNeedByHospitalIdAndTypeBloodAsync<TModel>(string hospitalId, TypeBlood typeBlood);
 
-        Task Edit(string patientId, int donors);
+        Task Edit<TModel>(string patientId, TModel model);
 
     }
 }
