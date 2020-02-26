@@ -4,8 +4,9 @@ namespace OwnGiveSave.Data.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.AspNetCore.Identity;
-
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using OwnGiveSave.Data.Common.Models;
 
     public class OwnGiveSaveUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -29,8 +30,9 @@ namespace OwnGiveSave.Data.Models
         public DateTime? DeletedOn { get; set; }
 
         [Required]
+        [ForeignKey("Donor")]
         public string DonorId { get; set; }
-        public Donor Donor { get; set; }
+        public virtual Donor Donor { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

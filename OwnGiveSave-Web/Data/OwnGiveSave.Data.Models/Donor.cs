@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using OwnGiveSave.Data.Common.Models;
     using OwnGiveSave.Services.Mapping;
 
@@ -14,21 +15,21 @@
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
 
-            this.DonorHospitals = new HashSet<DonorHospital>();
+            this.DonorHospitals = new HashSet<DonorHospitalPatient>();
         }
 
         [Required]
         [ForeignKey("ApplicationUser")]
-        public string ApplicationUserId { get; set; }
-        public OwnGiveSaveUser ApplicationUser { get; set; }
+        public string OwnGiveSaveUserId { get; set; }
+        public virtual OwnGiveSaveUser OwnGiveSaveUser { get; set; }
 
         [Required]
         [ForeignKey("Blood")]
         public string BloodId { get; set; }
-        public Blood Blood { get; set; }
+        public virtual Blood Blood { get; set; }
 
         public DateTime LastBloodDonation { get; set; }
 
-        public ICollection<DonorHospital> DonorHospitals { get; set; }
+        public virtual IEnumerable<DonorHospitalPatient> DonorHospitals { get; set; }
     }
 }

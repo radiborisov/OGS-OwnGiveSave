@@ -4,7 +4,7 @@ namespace OwnGiveSave.Data.Models
     using System;
 
     using Microsoft.AspNetCore.Identity;
-
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using OwnGiveSave.Data.Common.Models;
 
     public class OwnGiveSaveRole : IdentityRole, IAuditInfo, IDeletableEntity

@@ -2,13 +2,12 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
     using OwnGiveSave.Data.Common.Models;
     using OwnGiveSave.Services.Mapping;
 
-    public class DonorHospital : BaseDeletableModel<string>, IMapTo<DonorHospital>
+    public class DonorHospitalPatient : BaseDeletableModel<string>, IMapTo<DonorHospitalPatient>
     {
-        public DonorHospital()
+        public DonorHospitalPatient()
         {
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
@@ -16,11 +15,15 @@
 
         [Required]
         public string DonorId { get; set; }
-        public Donor Donor { get; set; }
+        public virtual Donor Donor { get; set; }
 
         [Required]
         public string HospitalId { get; set; }
-        public Hospital Hospital { get; set; }
+        public virtual Hospital Hospital { get; set; }
+
+        [Required]
+        public string PatientId { get; set; }
+        public virtual Patient Patient { get; set; }
 
         [Required]
         public double LitersOfDonatedBlood { get; set; }

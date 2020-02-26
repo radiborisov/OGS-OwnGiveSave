@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using OwnGiveSave.Data.Common.Models;
     using OwnGiveSave.Services.Mapping;
 
@@ -17,17 +18,23 @@
         [Required]
         [ForeignKey("Hospital")]
         public string HospitalId { get; set; }
-        public Hospital Hospital { get; set; }
+        public virtual Hospital Hospital { get; set; }
 
         [Required]
         [ForeignKey("Blood")]
         public string BloodId { get; set; }
-        public Blood Blood { get; set; }
+        public virtual Blood Blood { get; set; }
 
         [Required]
         public DateTime DeadlineOfTheDonations { get; set; }
 
         [Required]
         public int NeededDonators { get; set; }
+
+        [Required]
+        public double LitersOfBloodPerDonor { get; set; }
+
+        [Required]
+        public bool IsReady { get; set; }
     }
 }

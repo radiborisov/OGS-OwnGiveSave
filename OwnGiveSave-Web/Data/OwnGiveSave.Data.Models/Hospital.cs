@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using OwnGiveSave.Data.Common.Models;
     using OwnGiveSave.Services.Mapping;
 
@@ -14,7 +14,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
 
-            this.HospitalDonors = new HashSet<DonorHospital>();
+            this.HospitalDonors = new HashSet<DonorHospitalPatient>();
             this.Patients = new HashSet<Patient>();
         }
 
@@ -25,13 +25,13 @@
         public string Name { get; set; }
 
         public string LocationId { get; set; }
-        public HospitalLocation Location { get; set; }
+        public virtual HospitalLocation Location { get; set; }
 
         [Required]
         public string TypeOfTheHospital { get; set; }
 
-        public ICollection<Patient> Patients { get; set; }
+        public virtual IEnumerable<Patient> Patients { get; set; }
 
-        public ICollection<DonorHospital> HospitalDonors { get; set; }
+        public virtual IEnumerable<DonorHospitalPatient> HospitalDonors { get; set; }
     }
 }
