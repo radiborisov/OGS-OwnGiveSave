@@ -1,7 +1,14 @@
-﻿@model OwnGiveSave.Web.ViewModels.Administration.Dashboard.IndexViewModel
+﻿@model OwnGiveSave.Web.ViewModels.Hospitals.ViewModels.HospitalPatientViewModel
 @{
     this.ViewData["Title"] = "Hospital dashboard";
 }
 
 <h1>@this.ViewData["Title"]</h1>
-Settings: @this.Model.SettingsCount
+<div>
+   @foreach (var item in this.Model.Patients)
+   {
+       <h1>@item.Blood.IsBloodPositive</h1>
+       <h1>@item.Blood.TypeBlood</h1>
+       <br />
+   }
+</div>

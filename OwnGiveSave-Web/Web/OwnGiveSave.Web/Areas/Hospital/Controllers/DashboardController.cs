@@ -1,22 +1,36 @@
 ﻿namespace OwnGiveSave.Web.Areas.Hospital.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
     using OwnGiveSave.Services.Data.Contracts;
-    using OwnGiveSave.Web.ViewModels.Administration.Dashboard;
+    using OwnGiveSave.Web.ViewModels.Hospitals.ViewModels;
+    using OwnGiveSave.Web.ViewModels.Patiens.ViewModels;
 
     public class DashboardController : HospitalController
     {
-        private readonly ISettingsService settingsService;
+        private readonly IHospitalService hospitalService;
 
-        public DashboardController(ISettingsService settingsService)
+        public DashboardController(IHospitalService hospitalService)
         {
-            this.settingsService = settingsService;
+            this.hospitalService = hospitalService;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-            return this.View(viewModel);
+            var hospitalName = this.User.Identity.Name;
+            var hospitalInfo = await this.hospitalService.GetHospitalByHospitalUsername<HospitalPatientViewModel>(hospitalName);
+
+
+            return this.View(hospitalInfo);
+        }
+
+        public async Task<IActionResult> EditPatient()
+        {
+
+            return this.View();
         }
     }
 }
