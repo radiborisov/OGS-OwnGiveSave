@@ -48,7 +48,7 @@
                 return this.BadRequest();
             }
 
-            await this.patientService.AddPatientAsync<PatientBindingModel>(model);
+            await this.patientService.Create<PatientBindingModel>(model);
 
             return this.Ok();
         }

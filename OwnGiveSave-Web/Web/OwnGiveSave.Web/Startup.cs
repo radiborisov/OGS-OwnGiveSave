@@ -53,7 +53,7 @@
                 options => options.UseSqlServer(this.configuration.GetConnectionString("AdminConnection")));
 
             services.AddDbContext<OwnGiveSaveDbContext>(
-              options => options.UseSqlServer(this.configuration.GetConnectionString("UserConnection")));
+              options => options.UseLazyLoadingProxies().UseSqlServer(this.configuration.GetConnectionString("UserConnection")));
 
             services.AddDefaultIdentity<OwnGiveSaveAdminUser>(AdminIdentityOptionsProvider.GetIdentityOptions)
                             .AddRoles<OwnGiveSaveAdminRole>().AddEntityFrameworkStores<OwnGiveSaveAdminDbContext>();
@@ -95,7 +95,7 @@
             services
                 .AddIdentityCore<OwnGiveSaveUser>(options =>
                 {
-                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredLength = 3;
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
@@ -125,6 +125,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IHospitalService, HospitalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
