@@ -76,31 +76,11 @@
                .ToListAsync();
         }
 
-        public async Task ChangePatientDonors(string patientId, int donors)
+        public async Task Edit<TModel>(string patientId, TModel model)
         {
-            var patient = await this.patientRepository.All().FirstOrDefaultAsync(x => x.Id == patientId);
+            var patient = await this.patientRepository.All().SingleOrDefaultAsync(x => x.Id == patientId);
 
-            patient.NeededDonators = donors;
-
-            this.patientRepository.Update(patient);
-            await this.patientRepository.SaveChangesAsync();
-        }
-
-        public async Task ChangePatientStatus(string patientId, bool status)
-        {
-            var patient = await this.patientRepository.All().FirstOrDefaultAsync(x => x.Id == patientId);
-
-            patient.IsReady = status;
-
-            this.patientRepository.Update(patient);
-            await this.patientRepository.SaveChangesAsync();
-        }
-
-        public async Task ChangePatientLitersPerDonor(string patientId, int liters)
-        {
-            var patient = await this.patientRepository.All().FirstOrDefaultAsync(x => x.Id == patientId);
-
-            patient.LitersOfBloodPerDonor = liters;
+            AutoMapperConfig.MapperInstance.Map(model, patient);
 
             this.patientRepository.Update(patient);
             await this.patientRepository.SaveChangesAsync();
