@@ -51,8 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Hospital\Data\" />
-    <Folder Include="Areas\Hospital\Models\" />
     <Folder Include="Views\About\" />
     <Folder Include="Views\Causes\" />
     <Folder Include="wwwroot\images\" />

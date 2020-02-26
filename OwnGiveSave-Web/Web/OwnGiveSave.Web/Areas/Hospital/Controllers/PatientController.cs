@@ -57,9 +57,14 @@
         [HttpPost(Name = "Edit")]
         public async Task<IActionResult> Edit(string id, PatientBindingModel patientBinding)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.Redirect("/Hospital/Patient/Edit");
+            }
 
+            await this.patientService.Edit<PatientBindingModel>(id, patientBinding);
 
-            return this.View();
+            return this.Redirect("/Hospital/Dashboard/Index");
         }
     }
 }
