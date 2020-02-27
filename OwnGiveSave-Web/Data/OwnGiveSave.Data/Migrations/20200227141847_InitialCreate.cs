@@ -34,8 +34,6 @@ namespace OwnGiveSave.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    DonorId = table.Column<string>(nullable: true),
-                    PatientId = table.Column<string>(nullable: true),
                     TypeBlood = table.Column<int>(nullable: false),
                     IsBloodPositive = table.Column<bool>(nullable: false)
                 },
@@ -164,7 +162,8 @@ namespace OwnGiveSave.Data.Migrations
                     BloodId = table.Column<string>(nullable: false),
                     DeadlineOfTheDonations = table.Column<DateTime>(nullable: false),
                     NeededDonators = table.Column<int>(nullable: false),
-                    LitersOfNeededBlood = table.Column<double>(nullable: false)
+                    LitersOfBloodPerDonor = table.Column<double>(nullable: false),
+                    IsReady = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -230,6 +229,7 @@ namespace OwnGiveSave.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     DonorId = table.Column<string>(nullable: false),
                     HospitalId = table.Column<string>(nullable: false),
+                    PatientId = table.Column<string>(nullable: false),
                     LitersOfDonatedBlood = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
@@ -245,6 +245,12 @@ namespace OwnGiveSave.Data.Migrations
                         name: "FK_DonorHospitals_Hospitals_HospitalId",
                         column: x => x.HospitalId,
                         principalTable: "Hospitals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DonorHospitals_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -410,10 +416,14 @@ namespace OwnGiveSave.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DonorHospitals_PatientId",
+                table: "DonorHospitals",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Donors_BloodId",
                 table: "Donors",
-                column: "BloodId",
-                unique: true);
+                column: "BloodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Donors_IsDeleted",
@@ -445,8 +455,7 @@ namespace OwnGiveSave.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_BloodId",
                 table: "Patients",
-                column: "BloodId",
-                unique: true);
+                column: "BloodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_HospitalId",
@@ -488,9 +497,6 @@ namespace OwnGiveSave.Data.Migrations
                 name: "Locations");
 
             migrationBuilder.DropTable(
-                name: "Patients");
-
-            migrationBuilder.DropTable(
                 name: "Settings");
 
             migrationBuilder.DropTable(
@@ -500,10 +506,13 @@ namespace OwnGiveSave.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Hospitals");
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Donors");
+
+            migrationBuilder.DropTable(
+                name: "Hospitals");
 
             migrationBuilder.DropTable(
                 name: "Blood");

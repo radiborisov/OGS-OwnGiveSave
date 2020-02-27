@@ -134,9 +134,6 @@ namespace OwnGiveSave.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DonorId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsBloodPositive")
                         .HasColumnType("bit");
 
@@ -145,9 +142,6 @@ namespace OwnGiveSave.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TypeBlood")
                         .HasColumnType("int");
@@ -189,15 +183,14 @@ namespace OwnGiveSave.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BloodId")
-                        .IsUnique();
+                    b.HasIndex("BloodId");
 
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Donors");
                 });
 
-            modelBuilder.Entity("OwnGiveSave.Data.Models.DonorHospital", b =>
+            modelBuilder.Entity("OwnGiveSave.Data.Models.DonorHospitalPatient", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -225,6 +218,10 @@ namespace OwnGiveSave.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PatientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DonorId");
@@ -232,6 +229,8 @@ namespace OwnGiveSave.Data.Migrations
                     b.HasIndex("HospitalId");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("DonorHospitals");
                 });
@@ -470,7 +469,10 @@ namespace OwnGiveSave.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<double>("LitersOfNeededBlood")
+                    b.Property<bool>("IsReady")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("LitersOfBloodPerDonor")
                         .HasColumnType("float");
 
                     b.Property<DateTime?>("ModifiedOn")
@@ -481,8 +483,7 @@ namespace OwnGiveSave.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BloodId")
-                        .IsUnique();
+                    b.HasIndex("BloodId");
 
                     b.HasIndex("HospitalId");
 
@@ -577,13 +578,13 @@ namespace OwnGiveSave.Data.Migrations
             modelBuilder.Entity("OwnGiveSave.Data.Models.Donor", b =>
                 {
                     b.HasOne("OwnGiveSave.Data.Models.Blood", "Blood")
-                        .WithOne("Donor")
-                        .HasForeignKey("OwnGiveSave.Data.Models.Donor", "BloodId")
+                        .WithMany()
+                        .HasForeignKey("BloodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OwnGiveSave.Data.Models.DonorHospital", b =>
+            modelBuilder.Entity("OwnGiveSave.Data.Models.DonorHospitalPatient", b =>
                 {
                     b.HasOne("OwnGiveSave.Data.Models.Donor", "Donor")
                         .WithMany("DonorHospitals")
@@ -594,6 +595,12 @@ namespace OwnGiveSave.Data.Migrations
                     b.HasOne("OwnGiveSave.Data.Models.Hospital", "Hospital")
                         .WithMany("HospitalDonors")
                         .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OwnGiveSave.Data.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -619,8 +626,8 @@ namespace OwnGiveSave.Data.Migrations
             modelBuilder.Entity("OwnGiveSave.Data.Models.Patient", b =>
                 {
                     b.HasOne("OwnGiveSave.Data.Models.Blood", "Blood")
-                        .WithOne("Patient")
-                        .HasForeignKey("OwnGiveSave.Data.Models.Patient", "BloodId")
+                        .WithMany()
+                        .HasForeignKey("BloodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
