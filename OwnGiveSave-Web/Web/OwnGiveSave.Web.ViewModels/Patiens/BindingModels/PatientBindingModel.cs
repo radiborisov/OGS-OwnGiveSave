@@ -9,9 +9,13 @@
     public class PatientBindingModel : IMapTo<Patient>
     {
         [Required]
-        public string HospitalId { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
+        public string SecondName { get; set; }
+
+        public string HospitalId { get; set; }
+
         public string BloodId { get; set; }
 
         [Required]

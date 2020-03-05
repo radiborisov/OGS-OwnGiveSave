@@ -9,15 +9,19 @@
     using OwnGiveSave.Services.Data.Contracts;
     using OwnGiveSave.Web.ViewModels;
     using OwnGiveSave.Web.ViewModels.Bloods.ViewModels;
+    using OwnGiveSave.Web.ViewModels.Hospitals.ViewModels;
+    using OwnGiveSave.Web.ViewModels.Patiens.BindingModels;
     using OwnGiveSave.Web.ViewModels.Patiens.ViewModels;
 
     public class PatientController : HospitalController
     {
+        private readonly IHospitalService hospitalService;
         private readonly IPatientService patientService;
         private readonly IBloodService bloodService;
 
-        public PatientController(IPatientService patientService,IBloodService bloodService)
+        public PatientController(IHospitalService hospitalService,IPatientService patientService, IBloodService bloodService)
         {
+            this.hospitalService = hospitalService;
             this.patientService = patientService;
             this.bloodService = bloodService;
         }
@@ -40,6 +44,12 @@
             {
                 return this.Redirect("/Hospital/Patient/Create");
             }
+
+            var hospitalName = this.User.Identity.Name;
+            var hospitalInfo = await this.hospitalService.GetHospitalByHospitalUsername<HospitalPatientViewModel>(hospitalName);
+
+            patientBindingModel.HospitalId = hospitalInfo.Id;
+            //patientBindingModel.BloodId = ;
 
             await this.patientService.Create<PatientBindingModel>(patientBindingModel);
 

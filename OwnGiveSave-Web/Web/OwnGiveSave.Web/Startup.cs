@@ -126,6 +126,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IPatientService, PatientService>();
             services.AddTransient<IHospitalService, HospitalService>();
+            services.AddTransient<IBloodService, BloodService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -134,29 +135,29 @@
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<OwnGiveSaveDbContext>();
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<OwnGiveSaveDbContext>();
 
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
+            //    if (env.IsDevelopment())
+            //    {
+            //        dbContext.Database.Migrate();
+            //    }
 
-                new OwnGiveSaveDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            }
+            //    new OwnGiveSaveDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            //}
 
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<OwnGiveSaveAdminDbContext>();
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<OwnGiveSaveAdminDbContext>();
 
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
+            //    if (env.IsDevelopment())
+            //    {
+            //        dbContext.Database.Migrate();
+            //    }
 
-                new OwnGiveSaveAdminDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider, this.configuration).GetAwaiter().GetResult();
-            }
+            //    new OwnGiveSaveAdminDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider, this.configuration).GetAwaiter().GetResult();
+            //}
 
             if (env.IsDevelopment())
             {

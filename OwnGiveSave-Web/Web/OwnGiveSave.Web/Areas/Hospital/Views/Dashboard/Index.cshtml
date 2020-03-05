@@ -5,10 +5,12 @@
 
 <h1>@this.ViewData["Title"]</h1>
 <div>
+    <a href="/Hospital/Patient/Create">Create patient</a>
    @foreach (var item in this.Model.Patients)
    {
        <h1>@item.Blood.IsBloodPositive</h1>
        <h1>@item.Blood.TypeBlood</h1>
        <br />
+       
    }
 </div>

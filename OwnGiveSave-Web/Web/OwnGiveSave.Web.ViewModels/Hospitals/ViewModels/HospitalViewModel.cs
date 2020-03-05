@@ -5,6 +5,8 @@
 
     public class HospitalViewModel : IMapFrom<Hospital>
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string TypeOfTheHospital { get; set; }

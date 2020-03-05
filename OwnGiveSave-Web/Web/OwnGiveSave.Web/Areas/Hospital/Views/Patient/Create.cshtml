@@ -1,7 +1,58 @@
-﻿
+﻿@using OwnGiveSave.Web.ViewModels.Patiens.BindingModels
+@model OwnGiveSave.Web.ViewModels.Patiens.BindingModels.PatientBindingModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<form action="post">
+    <div class="container">
+        <hr>
 
+        <div>
+            <label for="name"><b>Име</b></label>
+            <input type="text" placeholder="name" name="name" required asp-for="FirstName">
+        </div>
+
+        <div>
+            <label for="surname"><b>Фамилия</b></label>
+            <input type="text" placeholder="family name" name="surname" required asp-for="SecondName">
+
+        </div>
+
+        <div>
+            <label for="bloodtype"><b>Кръвна група</b></label>
+            <input type="text" placeholder="bloodtype" name="bloodtype" asp-for="BloodId">
+        </div>
+
+        <div>
+            <label for="due"><b>Срок за получаване на кръв</b></label>
+            <input type="datetime" class="datepicker" data-date-format="mm/dd/yyyy" asp-for="DeadlineOfTheDonations">
+
+        </div>
+
+        <div>
+            <label for="donorsneeded"><b>Брой донори, от които се нуждае</b></label>
+            <input type="text" placeholder="donors needed" name="donorsneeded" required asp-for="NeededDonators">
+
+        </div>
+
+        <div>
+            <label for="bloodneeded"><b>Количество кръв</b></label>
+            <input type="text" placeholder="blood needed" name="bloodneeded" required asp-for="LitersOfBloodPerDonor">
+
+        </div>
+
+        <hr>
+
+        <button type="submit" class="addbtn">Добави</button>
+    </div>
+</form>
+
+<script>
+    $.fn.datepicker.defaults.format = "mm/dd/yyyy";
+    $('.datepicker').datepicker({
+        startDate: '-3d'
+    });
+</script>
