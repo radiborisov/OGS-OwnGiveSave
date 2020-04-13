@@ -26,10 +26,10 @@
         public string HospitalId { get; set; }
         public virtual Hospital Hospital { get; set; }
 
-        //[Required]
-        //[ForeignKey("Blood")]
-        //public string BloodId { get; set; }
-        //public virtual Blood Blood { get; set; }
+        [Required]
+        [ForeignKey("Blood")]
+        public string BloodId { get; set; }
+        public virtual Blood Blood { get; set; }
 
         [Required]
         public DateTime DeadlineOfTheDonations { get; set; }

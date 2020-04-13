@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using OwnGiveSave.Data.Models;
     using OwnGiveSave.Services.Data.Contracts;
-    using OwnGiveSave.Web.ViewModels;
+    using OwnGiveSave.Web.ViewModels.Patiens.BindingModels;
     using OwnGiveSave.Web.ViewModels.User;
 
     [AllowAnonymous]
